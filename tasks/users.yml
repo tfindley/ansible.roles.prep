@@ -1,0 +1,46 @@
+---
+# tasks file for base_httpd
+
+- name: Add user 'tristan'
+  user:
+    name: tristan
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+    password: $1$SomeCsal$oacN6onD8p6d/wmtIVwUh1
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    state: present
+    update_password: on_create
+
+
+- name: Add authoirzed key for 'tristan'
+  authorized_key:
+    user: tristan
+    state: present
+    key: https://github.com/tfindley.keys
+
+
+- name: Add user 'philote'
+  user:
+    name: philote
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+    password: $1$SomeSalt$K26DUYAj3K0Gx7ODUHqQs/
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    state: present
+    update_password: on_create
+
+
+- name: Add authoirzed key for 'philote'
+  authorized_key:
+    user: philote
+    state: present
+    key: https://github.com/tfindley.keys
+
+
+- name: Remove user 'pi'
+  user:
+    name: pi
+    state: absent
+    remove: yes
