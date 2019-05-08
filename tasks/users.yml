@@ -1,23 +1,17 @@
 ---
 # tasks file for base_httpd
 
-- name: Add user 'tristan'
+- name: Lock down 'pi' user
   user:
-    name: tristan
+    name: pi
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-    password: $1$SomeCsal$oacN6onD8p6d/wmtIVwUh1
-    shell: /bin/bash
-    groups: sudo
-    append: yes
+    password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
+    shell: /dev/null
+    groups: null
+    append: no
     state: present
-    update_password: on_create
-
-
-- name: Add authoirzed key for 'tristan'
-  authorized_key:
-    user: tristan
-    state: present
-    key: https://github.com/tfindley.keys
+    update_password: always
+  when: ansible_user_id == "pi"
 
 
 - name: Add user 'philote'
@@ -32,6 +26,7 @@
     update_password: on_create
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
+
 - name: Add user 'philote'
   user:
     name: philote
@@ -43,6 +38,7 @@
     state: present
     update_password: on_create
   when: ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "CentOS"
+
 
 - name: Add authorized key for 'philote'
   authorized_key:
