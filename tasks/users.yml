@@ -13,6 +13,12 @@
     update_password: always
   when: ansible_user_id == "pi" or ansible_env.SUDO_USER == "pi"
 
+- name: Remove user 'pi'
+  user:
+    name: pi
+    state: absent
+    remove: yes
+  when: ansible_user_id != "pi" or ansible_env.SUDO_USER == "pi"
 
 - name: Add user 'philote' for Ansible control (DEB)
   user:
