@@ -26,7 +26,7 @@
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
     password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
     shell: /bin/bash
-    groups: sudo.adm
+    groups: sudo,adm
     append: yes
     state: present
     update_password: on_create
