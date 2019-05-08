@@ -1,7 +1,7 @@
 ---
 # tasks file for base_httpd
 
-- name: Lock down 'pi' user
+- name: Lock down 'pi' user (if it exists and is in use) prior to deletion
   user:
     name: pi
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
@@ -11,10 +11,10 @@
     append: no
     state: present
     update_password: always
-  when: ansible_user_id == "pi"
+  when: ansible_user_id == "pi" or ansible_env.SUDO_USER == "pi"
 
 
-- name: Add user 'philote'
+- name: Add user 'philote' for Ansible control (DEB)
   user:
     name: philote
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
@@ -27,7 +27,7 @@
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 
-- name: Add user 'philote'
+- name: Add user 'philote' for Ansible control (RHEL)
   user:
     name: philote
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
