@@ -23,9 +23,19 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: rp-test
+      become: yes
+      gather_facts: true
       roles:
-         - { role: username.rolename, x: 42 }
+        - role: '/home/tristan/ansible/roles/ansible-prep'
+
+        
+To run the playbook:
+First run (password: raspberry):
+ansible-playbook -i ~/ansible/server/simhosts ~/ansible/server/playbooks/ansible-prep.yml -u pi -k
+Second Run: (ansible auth via SSH keypair. SUDO via preset password)
+$ ansible-playbook -i ~/ansible/server/simhosts ~/ansible/server/playbooks/ansible-prep.yml -u philote -K
+
 
 License
 -------

@@ -13,7 +13,7 @@
     update_password: always
   when: ansible_user_id == "pi" or ansible_env.SUDO_USER == "pi"
 
-- name: Remove user 'pi'
+- name: Remove user 'pi' (when not in use)
   user:
     name: pi
     state: absent
