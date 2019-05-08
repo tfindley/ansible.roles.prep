@@ -24,13 +24,25 @@
   user:
     name: philote
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-    password: $1$SomeSalt$K26DUYAj3K0Gx7ODUHqQs/
+    password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
     shell: /bin/bash
-    groups: sudo
+    groups: sudo adm
     append: yes
     state: present
     update_password: on_create
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
+- name: Add user 'philote'
+  user:
+    name: philote
+    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
+    password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
+    shell: /bin/bash
+    groups: wheel
+    append: yes
+    state: present
+    update_password: on_create
+  when: ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "CentOS"
 
 - name: Add authorized key for 'philote'
   authorized_key:
