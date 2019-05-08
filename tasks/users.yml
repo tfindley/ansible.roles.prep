@@ -50,9 +50,3 @@
     state: present
     key: "{{ lookup('file', 'id_rsa.pub') }}"
 
-
-- name: Remove user 'pi'
-  user:
-    name: pi
-    state: absent
-    remove: yes
