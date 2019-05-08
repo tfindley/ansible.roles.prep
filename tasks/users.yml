@@ -32,11 +32,11 @@
     update_password: on_create
 
 
-- name: Add authoirzed key for 'philote'
+- name: Add authorized key for 'philote'
   authorized_key:
     user: philote
     state: present
-    key: https://github.com/tfindley.keys
+    key: "{{ lookup('file', 'id_rsa.pub') }}"
 
 
 - name: Remove user 'pi'
