@@ -28,6 +28,6 @@
 
 - name: Add authorized key for Ansible user
   authorized_key:
-    user: philote
+    user: "{{ansible_usr}}"
     state: present
     key: "{{ lookup('file', 'id_rsa.pub') }}"
