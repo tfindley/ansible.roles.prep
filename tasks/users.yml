@@ -59,7 +59,3 @@
     user: philote
     state: present
     key: "{{ lookup('file', 'id_rsa.pub') }}"
-
-- name: Unconditionally reboot the machine with all defaults
-  reboot:
-  when: 
