@@ -8,4 +8,16 @@
 - debug:
     msg: "Ansible User ID: '{{ ansible_user_id }}'. Ansible SUDO User: '{{ ansible_env.SUDO_USER }}'."
 
-- include_tasks: users.yml
+- name: Check if user pi exists
+  getent:
+  database: passwd
+  key: pi
+  fail_key: False
+  register: user_pi
+
+- include_tasks: pi.yml
+  when: user_pi is succeeded
+
+- include_tasks: philote.yml
+
+
