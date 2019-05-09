@@ -25,7 +25,7 @@
     name: philote
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
     password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
-    shell: /bin/bash
+    shell: /dev/null
     groups: sudo,adm
     append: yes
     state: present
@@ -38,7 +38,7 @@
     name: philote
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
     password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
-    shell: /bin/bash
+    shell: /dev/null
     groups: wheel
     append: yes
     state: present
