@@ -2,11 +2,10 @@
 # tasks file for base_httpd
 
 
-- name: Add user 'philote' for Ansible control (DEB)
+- name: Add user for Ansible control (DEB)
   user:
-    name: philote
-    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-    password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
+    name: "{{ansible_usr}}"
+    password: "{{ansible_pwd}}"
     shell: /bin/bash
     groups: sudo,adm
     append: yes
@@ -15,11 +14,10 @@
   when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
 
 
-- name: Add user 'philote' for Ansible control (RHEL)
+- name: Add user for Ansible control (RHEL)
   user:
-    name: philote
-    # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-    password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
+    name: "{{ansible_usr}}"
+    password: "{{ansible_pwd}}"
     shell: /bin/bash
     groups: wheel
     append: yes
@@ -28,7 +26,7 @@
   when: ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "CentOS"
 
 
-- name: Add authorized key for 'philote'
+- name: Add authorized key for Ansible user
   authorized_key:
     user: philote
     state: present

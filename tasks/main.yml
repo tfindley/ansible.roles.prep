@@ -1,12 +1,9 @@
 ---
 # tasks file for ansible-prep
 
-- name: Gather facts from new server
+- name: Gather facts
   setup:
     filter: ansible_default_ipv4.address
-
-- debug:
-    msg: "Ansible User ID: '{{ ansible_user_id }}'. Ansible SUDO User: '{{ ansible_env.SUDO_USER }}'."
 
 - name: Check if user pi exists
   getent:
@@ -14,10 +11,11 @@
     key: pi
   register: user_pi
   ignore_errors: True
+  when: ansible_distribution == "Debian"
 
-- include_tasks: pi.yml
-  when: user_pi is succeeded
+- name: Lock down or Delete pi user
+  include_tasks: pi.yml
+  when: user_pi is succeeded and ansible_distribution == "Debian"
 
-- include_tasks: philote.yml
-
-
+- name: Setup Ansible user
+  include_tasks: ansible.yml
