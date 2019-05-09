@@ -1,3 +1,11 @@
 ---
 # tasks file for ansible-prep
+
+- name: Gather facts from new server
+  setup:
+    filter: ansible_default_ipv4.address
+
+- debug:
+    msg: "Ansible User ID: '{{ ansible_user_id }}'. Ansible SUDO User: '{{ ansible_env.SUDO_USER }}'."
+
 - include_tasks: users.yml
