@@ -12,13 +12,21 @@
     state: present
     update_password: always
   when: ansible_user_id == "pi" or ansible_env.SUDO_USER == "pi"
+  register: user_lockdown
 
-- name: Remove user 'pi' (when not in use)
-  user:
-    name: pi
-    state: absent
-    remove: yes
+- name: User or Sudo user is not 'pi'
+  block: 
+  - name: kill all processes owned by user 'pi'
+    action: shell pkill -u pi
+
+  - name: Remove user 'pi' (when not in use)
+    user:
+        name: pi
+        state: absent
+        remove: yes
+    register: user_lockdown
   when: ansible_env.SUDO_USER != "pi" or not ansible_user_id != "pi"
+
 
 - name: Add user 'philote' for Ansible control (DEB)
   user:
@@ -52,3 +60,6 @@
     state: present
     key: "{{ lookup('file', 'id_rsa.pub') }}"
 
+- name: Unconditionally reboot the machine with all defaults
+  reboot:
+  when: 
