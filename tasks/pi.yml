@@ -20,12 +20,10 @@
   block: 
   - name: kill all processes owned by user 'pi'
     action: shell pkill -u pi
-
   - name: Remove user 'pi' (when not in use)
     user:
         name: pi
         state: absent
         remove: yes
     register: user_lockdown
-    
   when: ansible_env.SUDO_USER != "pi" or not ansible_user_id != "pi"

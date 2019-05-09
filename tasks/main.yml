@@ -12,8 +12,8 @@
   getent:
     database: passwd
     key: pi
-    fail_key: False
   register: user_pi
+  ignore_errors: True
 
 - include_tasks: pi.yml
   when: user_pi is succeeded
