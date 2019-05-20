@@ -20,6 +20,7 @@
   block: 
   - name: kill all processes owned by user 'pi'
     action: shell pkill -u pi
+    ignore_errors: True
   - name: Remove user 'pi' (when not in use)
     user:
         name: pi
