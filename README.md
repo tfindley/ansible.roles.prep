@@ -33,7 +33,7 @@ To run the playbook:
 First run (password: raspberry):
 ansible-playbook -i ~/ansible/server/simhosts ~/ansible/server/playbooks/ansible-prep.yml -u pi -k
 Second Run: (ansible auth via SSH keypair. SUDO via preset password)
-$ ansible-playbook -i ~/ansible/server/simhosts ~/ansible/server/playbooks/ansible-prep.yml -u philote -K
+$ ansible-playbook --private-key ansible/id_rsa -i ~/ansible/server/hosts ~/ansible/server/playbooks/rpsetup.yml -u philote -K
 
 License
 -------
