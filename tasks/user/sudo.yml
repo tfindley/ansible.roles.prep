@@ -1,0 +1,40 @@
+---
+# tasks file for ansible-prep
+
+- name: Check if user {{ default_usr }} exists
+  getent:
+    database: passwd
+    key: "{{ default_usr }}"
+  register: user_chk
+  ignore_errors: True
+
+- name: Lock down or Delete centos user
+  block:
+
+  - name: Lock down user {{ default_usr }} (if it exists and is in use)
+    user:
+      name: "{{ default_usr }}"
+      password: "{{ansible_pwd}}"
+      shell: /dev/null
+      groups: null
+      append: no
+      state: present
+      update_password: always
+    when: (ansible_user_id == default_usr or ansible_env.SUDO_USER == default_usr) and user_lockdown == "True"
+    register: user_lockdown
+
+
+  - name: User or Sudo user is not {{ default_usr }}
+    block: 
+    - name: kill all processes owned by user {{ default_usr }}
+      action: shell pkill -u {{ default_usr }}
+      ignore_errors: True
+    - name: Delete user {{ default_usr }}
+      user:
+          name: "{{ default_usr }}"
+          state: absent
+          remove: yes
+      register: user_lockdown
+    when: ansible_env.SUDO_USER != default_usr or not ansible_user_id != default_usr
+
+  when: user_chk is succeeded 

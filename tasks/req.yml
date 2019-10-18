@@ -1,0 +1,16 @@
+---
+# tasks file for ansible-prep
+
+- name: Install Debian Requirements
+  include_tasks: req/deb.yml
+  when: ansible_os_family == "Debian"
+
+
+- name: Install Debian Requirements
+  include_tasks: req/rhel.yml
+  when: ansible_os_family == "RedHat"
+
+
+- name: Install VMWare Requirements
+  include_tasks: req/vmware.yml
+  when: ansible_virtualization_type == "VMware" and ansible_virtualization_role == "guest" 

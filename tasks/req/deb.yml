@@ -1,0 +1,11 @@
+---
+# tasks file for ansible-prep
+
+- name: Install apt packages
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - python-apt
+    - aptitude
+    - sudo

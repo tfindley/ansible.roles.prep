@@ -1,0 +1,16 @@
+---
+# tasks file for ansible-prep
+
+- name: Install EPEL Release repo
+  yum:
+    name: epel-release
+
+- name: Install a list of ansible-required packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - wget
+    - curl
+    - tar
+#    - libselinux-python

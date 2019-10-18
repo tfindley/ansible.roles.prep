@@ -1,0 +1,21 @@
+---
+# tasks file for ansible-prep
+
+- name: Delete Default Users - RHEL Family
+  include_tasks: user/sudo.yml
+  when: ansible_os_family == "RedHat"
+
+
+- name: Delete Default Users - Ubuntu
+  include_tasks: user/sudo.yml
+  when: ansible_distribution == "Ubuntu"
+
+
+- name: Delete Default Users - Raspbian
+  include_tasks: user/sudo.yml
+  when: ansible_distribution == "Debian" and ansible_lsb.id == "Raspbian"
+
+
+- name: Delete Default Users - Debian
+  include_tasks: user/su.yml
+  when: ansible_os_family == "Debian" and ansible_lsb.id == "Debian"

@@ -5,17 +5,46 @@
   setup:
     filter: ansible_default_ipv4.address
 
-- name: Check if user pi exists
-  getent:
-    database: passwd
-    key: pi
-  register: user_pi
-  ignore_errors: True
-  when: ansible_distribution == "Debian"
 
-- name: Lock down or Delete pi user
-  include_tasks: pi.yml
-  when: user_pi is succeeded and ansible_distribution == "Debian"
+# Context
+# -------
+- name: Set facts - CentOS
+  set_fact:
+    default_usr: 'centos'
+    sudo_grp: 'wheel'
+  when: ansible_distribution == "CentOS"
+
+- name: Set facts - RedHat
+  set_fact:
+    default_usr: 'redhat'
+    sudo_grp: 'wheel'
+  when: ansible_distribution == "RedHat"
+
+- name: Set facts - Ubuntu
+  set_fact:
+    default_usr: 'ubuntu'
+    sudo_grp: 'sudo,adm'
+  when: ansible_distribution == "Ubuntu"
+
+- name: Set facts - Raspbian
+  set_fact:
+    default_user: 'pi'
+    sudo_grp: 'sudo,adm'
+  when: ansible_distribution == "Debian" and ansible_lsb.id == "Raspbian"
+
+- name: Set facts - Debian
+  set_fact:
+    default_usr: 'debian'
+    sudo_grp: 'sudo,adm'
+  when: ansible_distribution == "Debian" and ansible_lsb.id == "Debian"
+# -------
+
+
+- name: Install Ansible requirements
+  include_tasks: req.yml
 
 - name: Setup Ansible user
   include_tasks: ansible.yml
+
+- name: Handle default users
+  include_tasks: user.yml

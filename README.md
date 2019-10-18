@@ -29,11 +29,18 @@ Including an example of how to use your role (for instance, with variables passe
       roles:
         - role: '/home/tristan/ansible/roles/ansible-prep'
 
-To run the playbook:
-First run (password: raspberry):
-ansible-playbook -i ~/ansible/server/simhosts ~/ansible/server/playbooks/ansible-prep.yml -u pi -k
+To run the playbook (uses sudo):
+First run - Raspberry Pi: (password: raspberry):
+ansible-playbook -i ~/ansible/server/inventory/hosts ~/ansible/server/playbooks/ansible-prep.yml -u pi -k
+
+First run - Debian (uses su):
+ansible-playbook -i ~/ansible/server/inventory/dev ~/ansible/server/playbooks/ansible-prep.yml --become-method su -u <user> -k -K
+
+First run - CentOS (uses sudo):
+ansible-playbook -i ~/ansible/server/inventory/dev ~/ansible/server/playbooks/ansible-prep.yml -u <user> -k
+
 Second Run: (ansible auth via SSH keypair. SUDO via preset password)
-$ ansible-playbook --private-key ansible/id_rsa -i ~/ansible/server/hosts ~/ansible/server/playbooks/rpsetup.yml -u philote -K
+$ ansible-playbook --private-key ansible/server/ssh/id_rsa -i ~/ansible/server/inventory/hosts ~/ansible/server/playbooks/rpsetup.yml -u <ansible_user> -K
 
 License
 -------

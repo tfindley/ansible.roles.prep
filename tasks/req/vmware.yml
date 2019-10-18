@@ -1,0 +1,7 @@
+---
+# tasks file for ansible-prep
+
+- name: Install Open VM Tools packages
+  package:
+    name: open-vm-tools
+    state: present
