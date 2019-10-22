@@ -5,6 +5,13 @@
   yum:
     name: epel-release
 
+
+- name: Install SELinux Python Library
+  yum:
+    name: libselinux-python
+  when: ansible_selinux_python_present == "false"
+
+
 - name: Install a list of ansible-required packages
   yum:
     name: "{{ packages }}"
@@ -13,4 +20,3 @@
     - wget
     - curl
     - tar
-#    - libselinux-python

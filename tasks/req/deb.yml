@@ -7,5 +7,7 @@
   vars:
     packages:
     - python-apt
+    - libcurl3
     - aptitude
     - sudo
+    - curl
