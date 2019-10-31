@@ -3,6 +3,6 @@
 
 user_lockdown: False
 
-ansible_usr: philote
-# python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-ansible_pwd: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
+ansible_usr: ansible
+ansible_pwd: $1$SomeSalt$UqddPX3r4kH3UL5jq5/ZI.
+ansible_key: ssh-rsa enter_rsa_publickey_here user@system

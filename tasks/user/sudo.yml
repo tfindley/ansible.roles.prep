@@ -8,7 +8,7 @@
   register: user_chk
   ignore_errors: True
 
-- name: Lock down or Delete centos user
+- name: Lock down or Delete {{ default_usr }} user
   block:
 
   - name: Lock down user {{ default_usr }} (if it exists and is in use)

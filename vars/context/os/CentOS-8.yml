@@ -1,0 +1,7 @@
+default_usr: 'centos'
+
+package_install:
+- policycoreutils-python-utils
+- wget
+- curl
+- tar

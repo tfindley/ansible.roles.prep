@@ -16,4 +16,14 @@
   authorized_key:
     user: "{{ansible_usr}}"
     state: present
-    key: "{{ lookup('file', 'id_rsa.pub') }}"
+    key: "{{ansible_key}}"
+    # key: "{{ lookup('file', 'id_rsa.pub') }}"
+
+- name: Copy in AccountsService file to make {{ansible_usr}} a system user
+  copy:
+    src: AccountsService
+    dest: "/var/lib/AccountsService/users/{{ansible_usr}}"
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == "Ubuntu"

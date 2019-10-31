@@ -1,0 +1,7 @@
+sudo_grp: 'sudo,adm'
+
+package_install:
+- python-apt
+- aptitude
+- sudo
+- curl

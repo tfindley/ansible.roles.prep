@@ -4,18 +4,18 @@
 - name: Check if user pi exists
   getent:
     database: passwd
-    key: pi
+    key: "{{ default_usr }}"
   register: user_pi
   ignore_errors: True
 
-- name: Lock down or Delete pi user
+- name: Lock down or Delete {{ default_usr }} user
   block:
 
-  - name: Lock down 'pi' user (if it exists and is in use) prior to deletion
+  - name: Lock down user {{ default_usr }} user (if it exists and is in use)
     user:
-      name: pi
+      name: "{{ default_usr }}"
       # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-      password: $1$SomeSalt$u7WbTX3IA3U5ugjt0GW.P1
+      password: "{{ansible_pwd}}"
       shell: /dev/null
       groups: null
       append: no
@@ -25,14 +25,14 @@
     register: user_lockdown
 
 
-  - name: User or Sudo user is not 'pi'
+  - name: User is not {{ default_usr }}
     block: 
-    - name: kill all processes owned by user 'pi'
-      action: shell pkill -u pi
+    - name: kill all processes owned by user {{ default_usr }}
+      action: shell pkill -u {{ default_usr }}
       ignore_errors: True
-    - name: Remove user 'pi' (when not in use)
+    - name: Remove user {{ default_usr }} (when not in use)
       user:
-          name: pi
+          name: "{{ default_usr }}"
           state: absent
           remove: yes
       register: user_lockdown
