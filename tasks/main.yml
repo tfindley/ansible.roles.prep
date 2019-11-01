@@ -5,8 +5,6 @@
   setup:
     filter: ansible_default_ipv4.address
 
-
-
 # Context
 # -------
 # The context section is used to load variables. This has been built in a specific order so that subsequent variable files override earlier variables.
@@ -55,6 +53,17 @@
 #   - Variables in more specific files completely overwrite variables loaded before it.
 #   - Variables do not concatonate. You must specify the whole variable again.
 # -------
+
+- name: Load getent passwd database
+  getent:
+    database: passwd
+
+# If Minishift is installed we'll check whether it is running
+- name: Checking to see if {{default_usr}} is logged in using who
+  shell: "who | grep {{default_usr}}"
+  ignore_errors: yes
+  register: default_usr_active
+  when: default_usr in ansible_facts.getent_passwd
 
 
 - name: Install Ansible requirements

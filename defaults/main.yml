@@ -1,7 +1,8 @@
 ---
 # defaults file for ansible-prep
 
-user_lockdown: False
+user_lockdown: True
+user_delete: True
 
 ansible_usr: ansible
 ansible_pwd: $1$SomeSalt$UqddPX3r4kH3UL5jq5/ZI.
