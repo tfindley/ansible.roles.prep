@@ -45,15 +45,15 @@ Playbook Variables
 
 Role Variables
 - sudo_grp: The default sudo groups that a privilaged account needs to be added to for Sudo privilages. These are set at the OS family level.
-- - Family/Redhat: wheel
-- - Family/Debian: sudo, adm
+ - Family/Redhat: wheel
+ - Family/Debian: sudo, adm
 - package_install: The list of packages we want to install on a per-family or per-OS basis. NOTE: RedHat OS Family has been overridden at the OS specific level as CentOS/RHEL 7 and 8 have slightly different requirements
 - default_usr: This is the default user created on each OS - this is needed for the first run of the ansible-prep role but after the first run and the Ansible user has been created, this account is obsolete and can be deleted. This variable specifies which account to look for on each OS and lockdown or delete.
-- - OS/RedHat: redhat
-- - OS/CentOS: centos
-- - OS/Ubuntu: ubuntu
-- - OS/Debian: debian
-- - OS/Raspbian: pi
+ - OS/RedHat: redhat
+ - OS/CentOS: centos
+ - OS/Ubuntu: ubuntu
+ - OS/Debian: debian
+ - OS/Raspbian: pi
 
 
 Dependencies
