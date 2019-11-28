@@ -3,7 +3,7 @@ Ansible Prep
 
 This role is used for first-time deployment of an Ansible user, and lockdown/deletion of the stock system account
 
-WARNING: Read the requirements section as this role deletes a user account
+BEFORE USING THIS ROLE: Read the requirements section as this role deletes a user account
 
 Preface
 -------
@@ -11,8 +11,11 @@ Preface
 This role has evolved from an original requirement to deploy / manage multiple Raspberry Pi systems. Raspbian by default creates a user called 'pi' with the password 'raspberry'. In the original model of this role we used this account to deploy a new privilaged user and lock down the pi user. This was done on the first run of the role using the pi user.
 A second run of the role (this time as the ansible user that we just created) would subsequently destroy the pi account.
 
-Going forward, I have expanded the role to support most common Linux OSes.
-
+Going forward, I have expanded the role to support most common Linux OSes including
+- Debian
+- Ubuntu
+- CentOS
+- RedHat EL
 
 
 Requirements
@@ -59,7 +62,8 @@ Role Variables
 Dependencies
 ------------
 
-No dependencies
+There are no direct Ansible or System dependencies. The Role will install any basic Ansible requirements such as python modules.
+
 
 Example Playbook
 ----------------
