@@ -1,25 +1,30 @@
 ---
 # tasks file for ansible-prep
 
-
+# First we need to creat the Ansible user account that we will use on future runs of Ansible. This account needs to exist on Target systems, not on the Control system.
 - name: Add user for Ansible control user
   user:
-    name: "{{ansible_usr}}"
-    password: "{{ansible_pwd}}"
+    name: "{{ansible_usr}}"         # Set this variable in your Playbook
+    password: "{{ansible_pwd}}"     # Set this variable in your Playbook
     shell: /bin/bash
-    groups: "{{sudo_grp}}"
+    groups: "{{sudo_grp}}"          # This varialbe is set in var/context - the default sudo groups for each OS family
     append: yes
-    state: present
-    update_password: on_create
+    state: present                  # Tell the system that the account should be present
+    update_password: on_create      # Ensures we don't overwrite the password of the Ansible user account - it is only set to the above {{ansible_pwd}} during the first creation. Should you wish to change the password then it is better to use a user password change role.
 
+
+# We cannot use a password when accessing the Ansible user due to timeouts and it just being a pain-in-the-ass to enter a password for every system, so we use an SSH RSA keypair. see the following command: $ ssh-keygen
 - name: Add authorized key for Ansible user
   authorized_key:
-    user: "{{ansible_usr}}"
-    state: present
-    key: "{{ansible_key}}"
-    # key: "{{ lookup('file', 'id_rsa.pub') }}"
+    user: "{{ansible_usr}}"         # Set this variable in your Playbook
+    state: present                  # This is the Public key that you just generated using $ ssh-keygen   -   The private key should exist on your Ansible Control system
+    key: "{{ansible_key}}"          # Set this variable in your Playbook
 
-- name: Copy in AccountsService file to make {{ansible_usr}} a system user
+
+# This is used to obscure the ansible user account from any graphic user interface logon prompt.
+# Even if we disable remote password authentication we can still log on locally.
+# If the system is used in an Office/Lab or managed infrastructure environment we dont want to advertise the presence of this account to the system users.
+- name: Copy in AccountsService file to make {{ansible_usr}} a system user on Ubuntu-based systems.
   copy:
     src: AccountsService
     dest: "/var/lib/AccountsService/users/{{ansible_usr}}"
@@ -27,3 +32,7 @@
     group: root
     mode: 0644
   when: ansible_distribution == "Ubuntu"
+
+# Roadmap
+# -------
+# Add support for CentOS to obscure the account from the GUI.

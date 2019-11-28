@@ -1,6 +1,9 @@
 ---
 # tasks file for ansible-prep
 
+# This file simply directs Ansible to run the right set of instructions depending on whether we're using Sudo or Su to gain privilaged access
+# This file only exists to support Debian because they 'still' have a root account by default.
+
 - name: Delete Default Users - RHEL Family
   include_tasks: user/sudo.yml
   when: ansible_os_family == "RedHat"

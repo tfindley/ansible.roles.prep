@@ -1,0 +1,7 @@
+default_usr: 'redhat'
+
+package_install:
+- policycoreutils-python-utils
+- wget
+- curl
+- tar

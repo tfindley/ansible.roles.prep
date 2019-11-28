@@ -54,23 +54,28 @@
 #   - Variables do not concatonate. You must specify the whole variable again.
 # -------
 
+# First load the passwd user account database. We need this in subsequent steps to identify user accounts and change their behaviour. 
 - name: Load getent passwd database
   getent:
     database: passwd
 
-# If Minishift is installed we'll check whether it is running
+# Now we run a check to see what user the role is being run as. We store that as a variable to use later.
 - name: Checking to see if {{default_usr}} is logged in using who
   shell: "who | grep {{default_usr}}"
   ignore_errors: yes
   register: default_usr_active
   when: default_usr in ansible_facts.getent_passwd
 
-
+# Install any requirements for further Ansible runs.
 - name: Install Ansible requirements
   include_tasks: req.yml
 
+# Here we create the ansible user that we will use in the future - this assumes you havent built the system using PXE and kickstart
 - name: Setup Ansible user
   include_tasks: ansible.yml
 
+# Now we handle the default user account (typically this account will be the same name as the OS - all lower case)
+# First run: Default Account will be locked down
+# Second run: Default Account will be deleted.
 - name: Handle default users
   include_tasks: user.yml

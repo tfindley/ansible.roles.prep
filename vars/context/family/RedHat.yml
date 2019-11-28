@@ -1,6 +1,3 @@
 sudo_grp: 'wheel'
 
 package_install: # Overridden by os specicifity
-- wget
-- curl
-- tar

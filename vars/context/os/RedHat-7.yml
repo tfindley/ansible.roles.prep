@@ -1,0 +1,7 @@
+default_usr: 'redhat'
+
+package_install:
+- libsemanage-python
+- wget
+- curl
+- tar
