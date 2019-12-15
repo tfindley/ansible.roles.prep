@@ -7,7 +7,7 @@
     name: "{{ansible_usr}}"         # Set this variable in your Playbook
     password: "{{ansible_pwd}}"     # Set this variable in your Playbook
     shell: /bin/bash
-    groups: "{{sudo_grp}}"          # This varialbe is set in var/context - the default sudo groups for each OS family
+    groups: "{{sudo_grp}}"          # This variable is set in var/context - the default sudo groups for each OS family
     append: yes
     state: present                  # Tell the system that the account should be present
     update_password: on_create      # Ensures we don't overwrite the password of the Ansible user account - it is only set to the above {{ansible_pwd}} during the first creation. Should you wish to change the password then it is better to use a user password change role.

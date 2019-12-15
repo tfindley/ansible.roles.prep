@@ -4,21 +4,21 @@
 # This file simply directs Ansible to run the right set of instructions depending on whether we're using Sudo or Su to gain privilaged access
 # This file only exists to support Debian because they 'still' have a root account by default.
 
-- name: Delete Default Users - RHEL Family
+- name: Affect Default User - RHEL Family (sudo)
   include_tasks: user/sudo.yml
   when: ansible_os_family == "RedHat"
 
 
-- name: Delete Default Users - Ubuntu
+- name: Affect Default User - Ubuntu (sudo)
   include_tasks: user/sudo.yml
   when: ansible_distribution == "Ubuntu"
 
 
-- name: Delete Default Users - Raspbian
+- name: Affect Default User - Raspbian (sudo)
   include_tasks: user/sudo.yml
   when: ansible_distribution == "Debian" and ansible_lsb.id == "Raspbian"
 
 
-- name: Delete Default Users - Debian
+- name: Affect Default User - Debian (su)
   include_tasks: user/su.yml
   when: ansible_os_family == "Debian" and ansible_lsb.id == "Debian"
