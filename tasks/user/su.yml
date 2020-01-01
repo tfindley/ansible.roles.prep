@@ -11,7 +11,9 @@
     state: present
     update_password: always
 #    when: ansible_user_id == default_usr
-  when: default_usr in ansible_facts.getent_passwd and user_lockdown == True
+  when:
+    - default_usr in ansible_facts.getent_passwd
+    - user_lockdown == True
 
 
 - name: User is not {{ default_usr }}
@@ -24,8 +26,12 @@
 
   - name: Remove user {{ default_usr }} (when not in use)
     user:
-        name: "{{ default_usr }}"
-        state: absent
-        remove: yes
+      name: "{{ default_usr }}"
+      state: absent
+      remove: yes
 
-  when: default_usr in ansible_facts.getent_passwd and ansible_usr in ansible_facts.getent_passwd and user_delete == True
+  when:
+    - default_usr in ansible_facts.getent_passwd
+    - ansible_usr in ansible_facts.getent_passwd
+    - user_delete == True
+    - default_usr is ansible_usr

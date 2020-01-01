@@ -5,3 +5,8 @@ package_install:
 - aptitude
 - sudo
 - curl
+- rsync
+- screen
+- tree
+- vim
+- nano

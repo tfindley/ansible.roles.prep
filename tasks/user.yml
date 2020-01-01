@@ -16,7 +16,7 @@
 
 - name: Affect Default User - Raspbian (sudo)
   include_tasks: user/sudo.yml
-  when: ansible_distribution == "Debian" and ansible_lsb.id == "Raspbian"
+  when: ansible_os_family == "Debian" and ansible_lsb.id == "Raspbian"
 
 
 - name: Affect Default User - Debian (su)

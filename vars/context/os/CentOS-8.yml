@@ -5,3 +5,11 @@ package_install:
 - wget
 - curl
 - tar
+- rsync
+- net-tools
+- which
+- tree
+- screen
+- vim
+- nano
+- lsof
