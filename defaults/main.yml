@@ -3,7 +3,4 @@
 
 user_lockdown: True
 user_delete: True
-
-ansible_usr: ansible
-ansible_pwd: $1$SomeSalt$UqddPX3r4kH3UL5jq5/ZI.
-ansible_key: ssh-rsa enter_rsa_publickey_here user@system
+local_repos: False

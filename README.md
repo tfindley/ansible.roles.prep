@@ -120,6 +120,8 @@ Roadmap
 
 - Consider revising the Context for the default user accounts to give a list of default accounts to delete.
 - Allow overriding of the default_usr variable at a playbook, inventory or run level so we can specificy which account we want to delete
+- Add the ansible user to an ansible group
+- Add the ability to have multiple SSH rsa keys for the Ansible user, so that many different users can access the ansible user - useful for MultiUser environments
 
 License
 -------
