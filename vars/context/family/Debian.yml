@@ -10,3 +10,4 @@ package_install:
 - tree
 - vim
 - nano
+- git

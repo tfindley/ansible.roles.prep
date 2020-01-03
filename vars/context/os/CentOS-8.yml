@@ -13,3 +13,4 @@ package_install:
 - vim
 - nano
 - lsof
+- git
