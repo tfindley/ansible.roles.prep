@@ -107,7 +107,7 @@ Debian (uses su):
 ansible-playbook -i ~/ansible/server/inventory/dev ~/ansible/server/playbooks/ansible-prep.yml --become-method su -u <user> -k -K
 
 CentOS (uses sudo):
-ansible-playbook -i ~/ansible/server/inventory/dev ~/ansible/server/playbooks/ansible-prep.yml -u <user> -k
+ansible-playbook -i ~/ansible/server/inventory/dev ~/ansible/server/playbooks/ansible-prep.yml -u <user> -k -K
 
 Second Run
 ----------
