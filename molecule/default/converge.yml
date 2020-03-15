@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-prep"
+      include_role:
+        name: "ansible-prep"
+
+  vars:
+    ansible_usr: ansible
+    ansible_pwd: $1$SomeSalt$UqddPX3r4kH3UL5jq5/ZI.
+    ansible_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDPp0liRK0jszwcwuhF2RSpNLoL4oa5vE4uVt0eDqQ4K8mh0VKnbY+KuA1e5valDLPgRZBkVBTQ/vDPOXscCHkPTdLGHlXtx4RfBaVbKEVSkL5SNa8kDFAjmfU3kpwGI4BW4D0i3OPSgk/sFOmspGXMNWygWlkYuG0Sr4GAK0QQ2xTN/O3+3Fgmc7zTAxBSiVu+k8U6PlTED+3SqDnG81twqPwq1ZSOKA9Laadz48XMImjDJFvDK6euO989rWsMCbaYlW/RhyyTWJGTaMdNHTgTtd1nc3xBrUsYksCYktGDD42mGSBzWd3SJ0oBmE4u2n9o18KiNTLMrycWZbCvM9Xd philote@eros"

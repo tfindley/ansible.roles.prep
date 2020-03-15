@@ -15,7 +15,7 @@
     user:
       name: "{{ default_usr }}"
       # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
-      password: "{{ansible_pwd}}"
+      password: "{{ ansible_pwd }}"
       shell: /dev/null
       groups: null
       append: no
@@ -26,7 +26,7 @@
 
 
   - name: User is not {{ default_usr }}
-    block: 
+    block:
     - name: kill all processes owned by user {{ default_usr }}
       action: shell pkill -u {{ default_usr }}
       ignore_errors: True
@@ -38,5 +38,4 @@
       register: user_lockdown
     when: ansible_env.SUDO_USER != "pi" or not ansible_user_id != "pi"
 
-  when: user_pi is succeeded 
-
+  when: user_pi is succeeded

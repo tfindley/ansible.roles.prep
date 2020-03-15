@@ -8,17 +8,19 @@
   - name: Lock down user {{ default_usr }} (if it exists and is in use)
     user:
       name: "{{ default_usr }}"
-      password: "{{ansible_pwd}}"
+      password: "{{ ansible_pwd }}"
       shell: /dev/null
       groups: null
       append: no
       state: present
       update_password: always
-    when: ansible_env.SUDO_USER == default_usr and user_lockdown == True
+    when:
+      - ansible_env.SUDO_USER == default_usr
+      - user_lockdown
 
 
   - name: User or Sudo user is not {{ default_usr }}
-    block: 
+    block:
 
     - name: kill all processes owned by user {{ default_usr }}
       action: shell pkill -u {{ default_usr }}
@@ -33,4 +35,7 @@
           remove: yes
     when: ansible_env.SUDO_USER != default_usr
 
-  when: default_usr in ansible_facts.getent_passwd and ansible_usr in ansible_facts.getent_passwd and user_delete == True
+  when:
+    - default_usr in ansible_facts.getent_passwd
+    - ansible_usr in ansible_facts.getent_passwd
+    - user_delete
