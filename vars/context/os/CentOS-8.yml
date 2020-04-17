@@ -9,7 +9,6 @@ package_install:
 - net-tools
 - which
 - tree
-- screen
 - vim
 - nano
 - lsof
