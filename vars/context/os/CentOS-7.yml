@@ -9,7 +9,7 @@ package_install:
 - net-tools
 - which
 - tree
-- screen
+- tmux
 - vim
 - nano
 - lsof
