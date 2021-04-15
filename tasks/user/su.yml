@@ -1,7 +1,7 @@
 ---
 # tasks file for ansible-prep
 - name: Lock down user {{ default_usr }} user (if it exists and is in use)
-  user:
+  ansible.builtin.user:
     name: "{{ default_usr }}"
     # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
     password: "{{ ansible_pwd }}"
@@ -13,7 +13,7 @@
 #    when: ansible_user_id == default_usr
   when:
     - default_usr in ansible_facts.getent_passwd
-    - user_lockdown
+    - default_usr_lockdown
 
 
 - name: User is not {{ default_usr }}
@@ -25,10 +25,11 @@
     when: default_usr_active.rc == 1
 
   - name: Remove user {{ default_usr }} (when not in use)
-    user:
+    ansible.builtin.user:
       name: "{{ default_usr }}"
       state: absent
-      remove: yes
+      remove: True
+
 
   when:
     - default_usr in ansible_facts.getent_passwd
