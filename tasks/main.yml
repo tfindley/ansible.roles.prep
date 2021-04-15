@@ -2,7 +2,7 @@
 # tasks file for ansible-prep
 
 - name: Ansible-Prep.Main - Gather facts
-  setup:
+  ansible.builtin.setup:
     filter: ansible_default_ipv4.address
 
 # Context
@@ -43,16 +43,21 @@
 
 # First load the passwd user account database. We need this in subsequent steps to identify user accounts and change their behaviour. 
 - name: Ansible-Prep.Main - Load getent passwd database
-  getent:
+  ansible.builtin.getent:
     database: passwd
 
 # Install any requirements for further Ansible runs.
 - name: Ansible-Prep.Main - Hand off to PreFlight Tasks
   include_tasks: preflight.yml
 
+# Affect default network config
+# - name: Ansible-Prep.Main - Hand off ot Network task
+#   include_tasks: network.yml
+#   when: not ansible_distribution == "RedHat" or ansible_distribution == "CentOS"
+
 # Now we run a check to see what user the role is being run as. We store that as a variable to use later.
 - name: Ansible-Prep.Main - Checking the user Ansible is running under
-  shell: "who | grep {{ default_usr }}"
+  ansible.builtin.shell: "who | grep {{ default_usr }}"
   ignore_errors: yes
   register: default_usr_active
   when: default_usr in ansible_facts.getent_passwd

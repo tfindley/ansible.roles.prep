@@ -1,0 +1,26 @@
+- name: Ansible-Prep.Network - Install Network Manager
+  ansible.builtin.package:
+    name: network-manager
+    state: present
+  notify: Enable NM
+
+- name: Ansible-Prep.Network - Check for netplan config
+  ansible.builtin.stat:
+    path: /etc/netplan/50-cloud-init.yaml
+  register: netplan
+
+- name: Ansible-Prep.Network - rewrite netplan to force NetworkManager
+  ansible.builtin.template:
+    src: 50-cloud-init.j2
+    dest: /etc/netplan/50-cloud-init.yaml
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - netplan.stat.exists
+    - netplan.stat.isreg
+
+- name: Ansible-Prep.Network - remove dhcpcd
+  ansible.builtin.package:
+    name: dhcpcd
+    state: absent

@@ -6,7 +6,7 @@
   block:
 
   - name: Lock down user {{ default_usr }} (if it exists and is in use)
-    user:
+    ansible.builtin.user:
       name: "{{ default_usr }}"
       password: "{{ ansible_pwd }}"
       shell: /dev/null
@@ -16,7 +16,7 @@
       update_password: always
     when:
       - ansible_env.SUDO_USER == default_usr
-      - user_lockdown
+      - default_usr_lockdown
 
 
   - name: User or Sudo user is not {{ default_usr }}
@@ -29,10 +29,10 @@
 
 
     - name: Delete user {{ default_usr }}
-      user:
+      ansible.builtin.user:
           name: "{{ default_usr }}"
           state: absent
-          remove: yes
+          remove: True
     when: ansible_env.SUDO_USER != default_usr
 
   when:

@@ -1,6 +1,5 @@
 ---
 # defaults file for ansible-prep
 
-user_lockdown: True
-user_delete: True
-local_repos: False
+default_usr_lockdown: True
+user_delete: False

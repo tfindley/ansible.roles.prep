@@ -2,12 +2,10 @@ sudo_grp: 'sudo,adm'
 
 package_install:
 - python-apt
-- aptitude
 - sudo
 - curl
 - rsync
 - tmux
 - tree
 - vim
-- nano
 - git

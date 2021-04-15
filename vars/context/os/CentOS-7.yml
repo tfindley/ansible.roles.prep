@@ -11,6 +11,5 @@ package_install:
 - tree
 - tmux
 - vim
-- nano
 - lsof
 - git

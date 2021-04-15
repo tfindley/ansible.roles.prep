@@ -4,7 +4,7 @@
 # First we need to creat the Ansible user account that we will use on future runs of Ansible.
 # This account needs to exist on Target systems, not on the Control system.
 - name: Ansible-Prep.Ansible - Add user for Ansible control user
-  user:
+  ansible.builtin.user:
     name: "{{ ansible_usr }}"         # Set this variable in your Playbook
     password: "{{ ansible_pwd }}"     # Set this variable in your Playbook
     shell: /bin/bash
@@ -18,7 +18,7 @@
 # and it just being a pain-in-the-ass to enter a password for every system
 # so we use an SSH RSA keypair. see the following command: $ ssh-keygen
 - name: Ansible-Prep.Ansible - Add authorized key for Ansible user
-  authorized_key:
+  ansible.builtin.authorized_key:
     user: "{{ ansible_usr }}"         # Set this variable in your Playbook
     state: present                  # This is the Public key that you just generated using $ ssh-keygen
     key: "{{ ansible_key }}"          # Set this variable in your Playbook
@@ -28,7 +28,7 @@
 # If the system is used in an Office/Lab or managed infrastructure environment we dont want to
 # advertise the presence of this account to the system users.
 - name: Ansible-Prep.Ansible - Define {{ ansible_usr }} as a system user on Ubuntu-based systems.
-  copy:
+  ansible.builtin.copy:
     src: AccountsService
     dest: "/var/lib/AccountsService/users/{{ ansible_usr }}"
     owner: root

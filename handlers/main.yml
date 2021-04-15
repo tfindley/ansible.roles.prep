@@ -1,2 +1,8 @@
 ---
 # handlers file for ansible-prep
+
+- name: Enable NM
+  ansible.builtin.service:
+    name: network-manager
+    enabled: True
+  become: True

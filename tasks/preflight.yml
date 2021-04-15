@@ -2,7 +2,7 @@
 # tasks preflight file for ansible-prep
 
 - name: Ansible-Prep.PreFlight - Check that variables are defined and set correctly
-  assert:
+  ansible.builtin.assert:
     that:
       - ansible_usr is defined
       - ansible_pwd is defined
@@ -13,15 +13,14 @@
 
 # Install Redhat EPEL Repo - we need this for some of our dependencies
 - name: Ansible-Prep.PreFlight - Add EPEL Release
-  yum:
+  ansible.builtin.yum:
     name: epel-release
   when:
     - ansible_os_family == "RedHat"
-    - local_repos
 
 
 - name: Ansible-Prep.PreFlight - Install packages
-  package:
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items: "{{ package_install }}"
@@ -30,7 +29,7 @@
 
 
 - name: Ansible-Prep.PreFlight - Install Open VM Tools packages
-  package:
+  ansible.builtin.package:
     name: open-vm-tools
     state: present
   when:

@@ -2,7 +2,7 @@
 # tasks file for ansible-prep
 
 - name: Check if user pi exists
-  getent:
+  ansible.builtin.getent:
     database: passwd
     key: "{{ default_usr }}"
   register: user_pi
@@ -12,7 +12,7 @@
   block:
 
   - name: Lock down user {{ default_usr }} user (if it exists and is in use)
-    user:
+    ansible.builtin.user:
       name: "{{ default_usr }}"
       # python -c 'import crypt; print crypt.crypt("This is my Password", "$1$SomeSalt$")'
       password: "{{ ansible_pwd }}"
@@ -22,7 +22,7 @@
       state: present
       update_password: always
     when: ansible_user_id == "pi" or ansible_env.SUDO_USER == "pi"
-    register: user_lockdown
+    register: default_usr_lockdown
 
 
   - name: User is not {{ default_usr }}
@@ -31,11 +31,11 @@
       action: shell pkill -u {{ default_usr }}
       ignore_errors: True
     - name: Remove user {{ default_usr }} (when not in use)
-      user:
+      ansible.builtin.user:
           name: "{{ default_usr }}"
           state: absent
           remove: yes
-      register: user_lockdown
+      register: default_usr_lockdown
     when: ansible_env.SUDO_USER != "pi" or not ansible_user_id != "pi"
 
   when: user_pi is succeeded
